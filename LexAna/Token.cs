@@ -24,10 +24,11 @@
 		NotEquals,			// !=
 		Less,				// <
 		Greater,			// >
-		LessOrEqua,			// <=
+		LessOrEqual,			// <=
 		GreaterOrEqual,		// >=
 		LogicalAnd,			// &&
 		LogicalOr,			// ||
+		LogicalNot,			// !
 
 		//Bitwise Operators
 		ShiftLeft,			// <<
