@@ -1,3 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using LexAna;
+
+using var input = new StreamReader("testfile.c");
+
+var lexicalAnalyser = new Lexical(input, "results");
+
+lexicalAnalyser.Analyse();
 

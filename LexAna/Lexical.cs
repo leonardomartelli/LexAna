@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+
 namespace LexAna
 {
     public class Lexical
@@ -148,10 +150,10 @@ namespace LexAna
             else if (_character == ']')
                 return ComputeToken(Token.BracketClose);
 
-            else if (_character == '(')
+            else if (_character == '{')
                 return ComputeToken(Token.BraceOpen);
 
-            else if (_character == ')')
+            else if (_character == '}')
                 return ComputeToken(Token.BraceClose);
 
             else if (_character == ';')
@@ -184,7 +186,8 @@ namespace LexAna
             else if (_character == '-')
                 return AnalysePossibleCases(Token.Minus,
                     ('=', Token.MinusAssign),
-                    ('-', Token.Decrement));
+                    ('-', Token.Decrement),
+                    ('>', Token.StructAccessor));
 
             else if (_character == '/')
                 return AnalysePossibleCases(Token.Division,
@@ -209,9 +212,67 @@ namespace LexAna
             return default;
         }
 
-        private TokenResult ReadWordToken() => default;
+        private TokenResult ReadWordToken()
+        {
+            if (char.IsLetter(_character) || _character == '_' || char.IsDigit(_character))
+            {
+                ReadChar();
+                return default;
+            }
+            else
+            {
+                BackSpace();
+                UnreadChar();
 
-        private TokenResult ReadNumberToken() => default;
+                _state = State.Initial;
+
+                if (!_reservedWords.TryGetValue(_lexical, out var token))
+                    token = Token.Identifier;
+
+                return ComputeToken(token);
+            }
+        }
+
+        private TokenResult ReadNumberToken()
+        {
+            if (char.IsDigit(_character))
+            {
+                ReadChar();
+
+                return default;
+            }
+            else if (_character == '.')
+            {
+                if (!_hasPoint)
+                {
+                    ReadChar();
+                    _hasPoint = true;
+
+                    return default;
+                }
+                else
+                {
+                    _state = State.Initial;
+
+                    return ComputeToken(Token.LexicalError);
+                }
+            }
+            else
+            {
+                _state = State.Initial;
+
+                BackSpace();
+                _hasPoint = false;
+
+                var token =
+                    int.TryParse(_lexical, out _) ? Token.IntegerConstant :
+                    float.TryParse(_lexical, out _) ? Token.FloatingPointConstant :
+                    Token.LexicalError;
+
+                return ComputeToken(token);
+            }
+
+        }
 
         private TokenResult ComputeToken(Token token)
         {
@@ -254,14 +315,20 @@ namespace LexAna
         private void AppendCharacter() =>
             _lexical += _character;
 
-        private void WriteResult(TokenResult tokenResult) =>
-            _outputStream.WriteLine(tokenResult.ToString());
+        private void WriteResult(TokenResult tokenResult)
+        {
+            _outputStream.WriteLine(tokenResult);
+
+            Debug.WriteLine(tokenResult);
+        }
 
         private void CleanLexical() =>
             _lexical = string.Empty;
 
         private void UnreadChar() =>
             _currentColumn--;
+
+        private void BackSpace() =>
+            _lexical = _lexical[0..^1];
     }
 }
-

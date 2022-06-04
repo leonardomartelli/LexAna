@@ -24,7 +24,7 @@
 		NotEquals,			// !=
 		Less,				// <
 		Greater,			// >
-		LessOrEqual,			// <=
+		LessOrEqual,		// <=
 		GreaterOrEqual,		// >=
 		LogicalAnd,			// &&
 		LogicalOr,			// ||
@@ -69,7 +69,7 @@
 		Void,				// void
 
 		//Pointers
-		Accessor,			// ->
+		StructAccessor,		// ->
 
 		//Characters
 		Underscore,			// _
