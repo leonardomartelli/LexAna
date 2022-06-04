@@ -41,10 +41,11 @@
 		MinusAssign,		// -=
 		ProductAssign,		// *=
 		DivisionAssign,		// /=
-		ModuleAssign,		// %=
+		ModuleAssign,       // %=
 
-		//Language Commands
-		DoWhile,			// do {} while
+        //Language Commands
+        For,                // for
+        DoWhile,			// do {} while
 		While,				// while
 		If,					// if
 		ElseIf,				// else if
