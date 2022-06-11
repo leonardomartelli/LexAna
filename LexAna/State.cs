@@ -1,11 +1,11 @@
-﻿using System;
-namespace LexAna
+﻿namespace LexAna
 {
 	public enum State
 	{
 		Initial,
 		Word,
-		Number
+		Number,
+		String
 	}
 }
 

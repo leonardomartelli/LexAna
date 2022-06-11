@@ -32,6 +32,7 @@ namespace LexAna
         private State _state;
 
         private bool _hasPoint;
+        private bool _scape;
         private bool _eof;
 
 
@@ -45,7 +46,7 @@ namespace LexAna
             _currentColumn = _currentLine = 0;
             _state = State.Initial;
 
-            _hasPoint = _eof = false;
+            _hasPoint = _eof = _scape = false;
 
             _inputStream = inputStream;
 
@@ -111,6 +112,8 @@ namespace LexAna
                 case State.Number:
                     return ReadNumberToken();
 
+                case State.String:
+                    return ReadStringToken();
                 default:
                     break;
             }
@@ -136,6 +139,12 @@ namespace LexAna
             {
                 ReadChar();
                 _state = State.Number;
+            }
+
+            else if(_character == '"')
+            {
+                ReadChar();
+                _state = State.String;
             }
 
             else if (_character == '(')
@@ -262,6 +271,8 @@ namespace LexAna
                 _state = State.Initial;
 
                 BackSpace();
+                UnreadChar();
+
                 _hasPoint = false;
 
                 var token =
@@ -272,6 +283,27 @@ namespace LexAna
                 return ComputeToken(token);
             }
 
+        }
+
+        private TokenResult ReadStringToken()
+        {
+            if (_scape || _character != '"')
+            {
+                ReadChar();
+
+                if (!_scape && _character == '\\')
+                    _scape = true;
+                else
+                    _scape = false;
+
+                return default;
+            }
+            else
+            {
+                _state = State.Initial;
+
+                return ComputeToken(Token.StringConstant);
+            }
         }
 
         private TokenResult ComputeToken(Token token)

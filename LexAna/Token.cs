@@ -8,6 +8,7 @@
 		Identifier,
 		IntegerConstant,
 		FloatingPointConstant,
+		StringConstant,
 
 		//Aritmethical Operators
 		Plus,				// +

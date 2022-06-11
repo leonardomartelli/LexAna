@@ -58,7 +58,9 @@ namespace LexAna
             $"Linha: {Line}";
 
         private string GetSpacing(int count) =>
-            string.Join(string.Empty, Enumerable.Range(0, count).Select(x => ' '));
+            count > 0
+            ? string.Join(string.Empty, Enumerable.Range(0, count).Select(x => ' '))
+            : "\t";
     }
 }
 
