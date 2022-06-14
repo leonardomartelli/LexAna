@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Linq;
+
 namespace LexAna
 {
     public record TokenResult

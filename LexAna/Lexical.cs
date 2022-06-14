@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace LexAna
 {
@@ -361,6 +363,6 @@ namespace LexAna
             _currentColumn--;
 
         private void BackSpace() =>
-            _lexical = _lexical[0..^1];
+            _lexical = _lexical.Substring(0, _lexical.Length-1);
     }
 }
