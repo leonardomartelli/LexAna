@@ -220,11 +220,17 @@ namespace LexAna
                 return AnalysePossibleCases(Token.And,
                     ('&', Token.LogicalAnd));
 
+            else if (_character == '.')
+                return AnalysePossibleCases(Token.Dot);
+
             else if (_character == '~')
                 return AnalysePossibleCases(Token.Negate);
 
             else if (_character == '^')
                 return AnalysePossibleCases(Token.Xor);
+
+            else if (_character == ':')
+                return AnalysePossibleCases(Token.Collon);
 
             return default;
         }

@@ -15,7 +15,6 @@
 		Minus,				// -
 		Product,			// *
 		Division,			// /
-		Power,				// ˆ
 		Increment,			// ++
 		Decrement,			// --
 		Module,				// %
@@ -37,7 +36,7 @@
 		And,				// &
 		Or,					// |
 		Negate,				// ˜
-		Xor,				// 
+		Xor,				// ˆ
 
 		//Assignment Operators
 		Assign,				// =
