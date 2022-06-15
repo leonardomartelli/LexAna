@@ -220,6 +220,12 @@ namespace LexAna
                 return AnalysePossibleCases(Token.And,
                     ('&', Token.LogicalAnd));
 
+            else if (_character == '~')
+                return AnalysePossibleCases(Token.Negate);
+
+            else if (_character == '^')
+                return AnalysePossibleCases(Token.Xor);
+
             return default;
         }
 
@@ -353,7 +359,7 @@ namespace LexAna
         {
             _outputStream.WriteLine(tokenResult);
 
-            Debug.WriteLine(tokenResult);
+            Console.WriteLine(tokenResult);
         }
 
         private void CleanLexical() =>

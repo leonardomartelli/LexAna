@@ -36,6 +36,8 @@
 		ShiftRight,			// >>
 		And,				// &
 		Or,					// |
+		Negate,				// ˜
+		Xor,				// 
 
 		//Assignment Operators
 		Assign,				// =
